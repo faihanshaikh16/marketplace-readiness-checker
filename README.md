@@ -7,7 +7,7 @@ Answer 14 quick questions (about 3 minutes) and get:
 - a to-do list in priority order, with the fixes that unblock the most platforms first
 - a plain-language "how to fix it" for every gap (GST, brand proof, GS1 barcodes, FSSAI, Legal Metrology labels, images, packaging, returns and more)
 
-👉 **Try it:** _live link coming soon_
+👉 **Try it:** https://faihanshaikh16.github.io/marketplace-readiness-checker/
 
 ![Results page showing a score per platform and a prioritised to-do list](screenshot.png)
 
