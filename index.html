@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketplace Readiness Check | YAE Digital</title>
+<meta name="description" content="Free 3-minute check: is your brand ready to sell on Amazon, Blinkit, Zepto and Meesho? Get a score for each platform and a to-do list in priority order.">
+<meta property="og:title" content="Is your brand ready to sell on Amazon, Blinkit, Zepto and Meesho?">
+<meta property="og:description" content="Free 3-minute readiness check with a score for each platform and a to-do list in priority order.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234f46e5'/%3E%3Cpath d='M9 16.5l4.5 4.5L23 11.5' stroke='white' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #f6f7fb; --card: #ffffff; --text: #1a1d29; --muted: #5b6275; --line: #e3e6ef;
+  --brand: #4f46e5; --brand-ink: #ffffff; --brand-soft: #eef0ff;
+  --ok: #15803d; --ok-soft: #e7f6ec;
+  --warn: #b45309; --warn-soft: #fdf3e3;
+  --bad: #b91c1c; --bad-soft: #fdecec;
+  --wa: #128c4a;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1117; --card: #171a23; --text: #e8eaf2; --muted: #a0a7ba; --line: #2a2f3d;
+    --brand: #8b84ff; --brand-ink: #0f1117; --brand-soft: #23234a;
+    --ok: #4ade80; --ok-soft: #14301f;
+    --warn: #fbbf24; --warn-soft: #33270f;
+    --bad: #f87171; --bad-soft: #3a1717;
+    --wa: #25d366;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 120px; }
+header.top { display: flex; align-items: center; gap: 10px; padding: 18px 0 6px; }
+.logo { width: 34px; height: 34px; border-radius: 9px; background: var(--brand); color: var(--brand-ink);
+  display: grid; place-items: center; font-weight: 800; font-size: 14px; letter-spacing: .5px; flex: none; }
+.brand-name { font-weight: 700; }
+.brand-tag { color: var(--muted); font-size: 13px; }
+h1 { font-size: clamp(26px, 5vw, 36px); line-height: 1.2; margin: 26px 0 10px; letter-spacing: -.01em; }
+.lead { color: var(--muted); margin: 0 0 8px; font-size: 17px; }
+.privacy { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 30px 0 10px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin: 0 0 12px; }
+fieldset.card { min-width: 0; }
+legend { padding: 0; font-weight: 600; float: left; width: 100%; margin-bottom: 4px; }
+legend + * { clear: both; }
+.help { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { position: relative; cursor: pointer; }
+.opts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opts span { display: inline-block; padding: 8px 16px; border: 1.5px solid var(--line); border-radius: 999px;
+  font-size: 15px; user-select: none; transition: background .12s, border-color .12s; }
+.opts label:hover span { border-color: var(--brand); }
+.opts input:focus-visible + span { outline: 3px solid var(--brand); outline-offset: 2px; }
+.opts input:checked + span { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); font-weight: 600; }
+fieldset.card.done { border-color: color-mix(in srgb, var(--brand) 35%, var(--line)); }
+
+.bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); z-index: 5; }
+.bar-in { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+.progress { flex: 1; min-width: 0; }
+.progress-text { font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+.track { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.fill { height: 100%; width: 0; background: var(--brand); transition: width .2s; }
+button, .btn { font: inherit; font-weight: 600; border: 0; border-radius: 10px; padding: 11px 18px; cursor: pointer;
+  background: var(--brand); color: var(--brand-ink); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--line); }
+.btn-wa { background: var(--wa); color: #fff; }
+
+.scores { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 700px) { .scores { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.score { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.score .name { font-weight: 600; }
+.score .num { font-size: 34px; font-weight: 800; line-height: 1.1; margin: 6px 0 8px; font-variant-numeric: tabular-nums; }
+.score .num small { font-size: 16px; font-weight: 600; color: var(--muted); }
+.score .track { margin-bottom: 10px; }
+.pill { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 8px; }
+.ok { color: var(--ok); background: var(--ok-soft); }
+.warn { color: var(--warn); background: var(--warn-soft); }
+.bad { color: var(--bad); background: var(--bad-soft); }
+.fill.ok { background: var(--ok); } .fill.warn { background: var(--warn); } .fill.bad { background: var(--bad); }
+.score .sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+ol.todo { list-style: none; padding: 0; margin: 0; counter-reset: t; }
+ol.todo li { counter-increment: t; position: relative; padding-left: 44px; }
+ol.todo li::before { content: counter(t); position: absolute; left: 16px; top: 16px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--brand-soft); color: var(--brand); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+.todo .title { font-weight: 600; margin: 0 0 6px; }
+.todo .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.todo .fix { margin: 0; color: var(--muted); font-size: 15px; }
+.allgood { text-align: center; padding: 24px 18px; }
+
+.cta { background: var(--brand-soft); border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent); border-radius: var(--radius);
+  padding: 20px; margin: 26px 0 12px; }
+.cta h3 { margin: 0 0 6px; font-size: 20px; }
+.cta p { margin: 0 0 14px; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+footer { color: var(--muted); font-size: 13px; margin-top: 34px; border-top: 1px solid var(--line); padding-top: 14px; }
+[hidden] { display: none !important; }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .bar, .actions, #quiz, .no-print { display: none !important; }
+  .card, .score, .cta { break-inside: avoid; }
+  .wrap { padding-bottom: 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo" id="logo" aria-hidden="true">YD</div>
+    <div>
+      <div class="brand-name" id="brandName">YAE Digital</div>
+      <div class="brand-tag" id="brandTag"></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="quiz">
+      <h1>Is your brand ready to sell on Amazon, Blinkit, Zepto and Meesho?</h1>
+      <p class="lead">Answer <span id="qCount">15</span> quick questions (about 3 minutes). You'll get a readiness score for each platform and a to-do list, with the most important fixes first.</p>
+      <p class="privacy">Your answers stay in your browser. Nothing is saved or sent anywhere.</p>
+
+      <h2>Your product category</h2>
+      <fieldset class="card" id="catBox">
+        <legend>What do you mainly sell?</legend>
+        <p class="help">Some categories need extra licences, so we add a few questions for them.</p>
+        <div class="opts" id="catOpts"></div>
+      </fieldset>
+
+      <div id="groups"></div>
+      <noscript><p class="card">This checker needs JavaScript turned on.</p></noscript>
+    </section>
+
+    <section id="results" hidden>
+      <h1 id="resTitle">Your readiness results</h1>
+      <p class="lead" id="resLead"></p>
+      <div class="scores" id="scores"></div>
+
+      <h2 id="todoHead">Your to-do list</h2>
+      <ol class="todo" id="todo"></ol>
+
+      <div class="cta">
+        <h3 id="ctaTitle">Want help getting there faster?</h3>
+        <p id="ctaText"></p>
+        <div class="actions">
+          <a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+            Chat on WhatsApp
+          </a>
+          <button type="button" class="btn-ghost" id="editBtn">Change my answers</button>
+          <button type="button" class="btn-ghost" id="printBtn">Save as PDF</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>This check is general guidance based on publicly available seller information (November 2026). Marketplace requirements change often and differ by category and seller type, so confirm the details on each platform's seller portal before you apply. Not legal or tax advice.</p>
+    <p>Made by <span id="footBrand">YAE Digital</span>.</p>
+  </footer>
+</div>
+
+<div class="bar" id="bar">
+  <div class="bar-in">
+    <div class="progress">
+      <div class="progress-text" id="progText">0 of 15 answered</div>
+      <div class="track"><div class="fill" id="progFill"></div></div>
+    </div>
+    <button type="button" id="seeBtn" disabled>See my results</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   SETTINGS: edit these to rebrand the page
+   ============================================================ */
+const SETTINGS = {
+  agencyName: "YAE Digital",
+  agencyInitials: "YD",
+  tagline: "Ecommerce & quick-commerce growth",
+  // WhatsApp number with country code, digits only, e.g. "919876543210".
+  // Leave empty to hide the WhatsApp button.
+  whatsappNumber: "918452904511"
+};
+
+/* ============================================================
+   RULES: one place to edit questions and platform weights
+   R = required (missing it blocks you on that platform)
+   H = helpful (improves the score, not a blocker)
+   N = not scored for that platform
+   "only" limits a question to some categories.
+   ============================================================ */
+const PLATFORMS = [
+  { id: "amazon",  name: "Amazon" },
+  { id: "blinkit", name: "Blinkit" },
+  { id: "zepto",   name: "Zepto" },
+  { id: "meesho",  name: "Meesho" }
+];
+
+const CATEGORIES = [
+  { id: "fashion",     label: "Fashion & accessories" },
+  { id: "home",        label: "Home & kitchen" },
+  { id: "food",        label: "Food & beverages" },
+  { id: "beauty",      label: "Beauty, personal care & health" },
+  { id: "electronics", label: "Electronics & appliances" },
+  { id: "other",       label: "Something else" }
+];
+
+const GROUPS = [
+  { id: "papers",  title: "Business papers" },
+  { id: "product", title: "Product & compliance" },
+  { id: "listing", title: "Listing content" },
+  { id: "ops",     title: "Operations" }
+];
+
+const QUESTIONS = [
+  { id: "gst", group: "papers",
+    q: "Do you have a GST registration (GSTIN) in your business name?",
+    todo: "Get a GST registration",
+    fix: "Register on gst.gov.in in the business name. Keep the legal name and address identical on GST, PAN, bank account and invoices, because mismatches are the most common reason onboarding gets stuck. Meesho also has a limited route for sellers without GSTIN (GST Enrolment ID, in-state sales only).",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "H" } },
+
+  { id: "bank", group: "papers",
+    q: "Do you have a PAN and a current bank account in the same business name?",
+    todo: "Line up PAN and a business bank account",
+    fix: "Open a current account in the business name and keep a cancelled cheque ready. Every platform checks that PAN, GST and bank names match.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "R" } },
+
+  { id: "brand", group: "papers",
+    q: "Do you have brand proof: a trademark (registered or applied for) or, if you resell, an authorisation letter from the brand owner?",
+    help: "Quick-commerce platforms usually ask for this. On Amazon it unlocks Brand Registry.",
+    todo: "Get brand proof",
+    fix: "File a trademark application with IP India; an application number is often enough to start. File it in the company's name, not a founder's personal name. If you resell another brand, get a signed authorisation letter from the brand owner.",
+    w: { amazon: "H", blinkit: "R", zepto: "R", meesho: "N" } },
+
+  { id: "barcode", group: "product",
+    q: "Does every product variant have its own EAN-13 barcode (from GS1 India) printed on the pack?",
+    todo: "Get GS1 barcodes for every variant",
+    fix: "Buy GS1 India barcodes, one per SKU, size and pack variant, and print them on a flat part of the pack. Quick-commerce warehouses scan every unit and can reject stock with missing or mismatched codes. Amazon sometimes grants a barcode (GTIN) exemption; quick-commerce usually does not.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "N" } },
+
+  { id: "fssai", group: "product", only: ["food"],
+    q: "Do you have a valid FSSAI licence, with the number printed on the label?",
+    todo: "Get an FSSAI licence on the label",
+    fix: "Apply for a State or Central FSSAI licence (Central is often preferred if you supply several states) and print the licence number and logo on every pack. Food can't be listed without it.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "R" } },
+
+  { id: "beautydocs", group: "product", only: ["beauty"],
+    q: "Do you have your manufacturing or import licence and recent lab test reports for each product?",
+    todo: "Collect category licences and lab reports",
+    fix: "Keep your cosmetics or drug manufacturing / import licence and recent lab test reports for each product ready to upload. Platforms ask for these before approving beauty, supplement and baby products.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "R" } },
+
+  { id: "bis", group: "product", only: ["electronics"],
+    q: "If your product falls under BIS compulsory registration (CRS) or a Quality Control Order, is it certified?",
+    help: "Answer \"Yes\" if it's certified or you've confirmed it isn't covered.",
+    todo: "Confirm BIS certification",
+    fix: "Check the BIS CRS product list and current Quality Control Orders. If your product is covered, you need the BIS registration number on the product and listing before you can sell it.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "R" } },
+
+  { id: "label", group: "product",
+    q: "Does your pack show MRP, net quantity, maker/packer name and address, month of manufacture, customer-care contact and country of origin?",
+    help: "These are the Legal Metrology declarations required on packaged goods in India.",
+    todo: "Fix the pack label (Legal Metrology)",
+    fix: "Update the label before your next print run: MRP (incl. of all taxes), net quantity, manufacturer / packer / importer name and address, month and year of manufacture, customer-care details and country of origin. Marketplaces ask for the same details on the listing.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "R" } },
+
+  { id: "shelf", group: "product", only: ["food", "beauty"],
+    q: "Is the expiry or best-before date printed, and can you supply stock with most of its shelf life left?",
+    todo: "Plan for shelf life",
+    fix: "Print expiry or best-before dates clearly and plan production so stock reaches warehouses fresh. Quick-commerce buyers often reject short-dated stock, so ask each platform for its minimum shelf-life rule for your category.",
+    w: { amazon: "H", blinkit: "R", zepto: "R", meesho: "H" } },
+
+  { id: "images", group: "listing",
+    q: "Do you have at least 5 good photos per product, with the main one on a pure white background?",
+    todo: "Shoot listing-ready product photos",
+    fix: "Shoot at least 5 images per product: a main image on pure white, plus angles, size or scale, key features or ingredients, and a lifestyle shot. Use at least 1000px on the longest side so zoom works on Amazon.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "H" } },
+
+  { id: "content", group: "listing",
+    q: "Are titles, key features (bullet points) and descriptions written for each product?",
+    todo: "Write titles, bullets and descriptions",
+    fix: "Write a keyword-rich title, 5 key features and a short description for each product. Keep one master copy so every marketplace gets consistent content.",
+    w: { amazon: "R", blinkit: "H", zepto: "H", meesho: "H" } },
+
+  { id: "master", group: "listing",
+    q: "Do you have one product sheet with SKU, HSN code, GST rate, MRP, weight and dimensions for every variant?",
+    todo: "Build a product master sheet",
+    fix: "Make one sheet with SKU, variant, EAN, HSN code, GST rate, MRP, selling price, packed weight and dimensions. Every platform asks for these, and wrong weights lead to wrong shipping fees.",
+    w: { amazon: "R", blinkit: "R", zepto: "R", meesho: "R" } },
+
+  { id: "packaging", group: "ops",
+    q: "Is your packaging courier-safe: sealed, leak-proof and able to survive drops and stacking?",
+    todo: "Make packaging courier-safe",
+    fix: "Test a drop from about 1 metre and stack boxes on top. Use sealed lids, inner boxes or bubble wrap for fragile items and leak-proof bags for liquids. Damage in transit turns into returns and bad reviews.",
+    w: { amazon: "R", blinkit: "H", zepto: "H", meesho: "R" } },
+
+  { id: "dispatch", group: "ops",
+    q: "Can you keep your top products in stock and pack orders within 1 to 2 days?",
+    todo: "Set up stock and dispatch routines",
+    fix: "Keep a few weeks of stock for your best sellers and set a daily packing routine. Late dispatch and cancellations hurt your seller rating on every platform.",
+    w: { amazon: "R", blinkit: "H", zepto: "H", meesho: "R" } },
+
+  { id: "qcsupply", group: "ops",
+    q: "Can you deliver bulk stock to quick-commerce warehouses in your target cities against purchase orders?",
+    todo: "Prepare for quick-commerce purchase orders",
+    fix: "Quick-commerce runs on purchase orders: you deliver cartons to their warehouses in each city on a booked slot. Check you can meet minimum order quantities, arrange transport and keep enough working capital for their payment cycle.",
+    w: { amazon: "N", blinkit: "R", zepto: "R", meesho: "N" } },
+
+  { id: "returns", group: "ops",
+    q: "Do you have a process for returns: who checks returned items, what gets resold and how you claim for damaged returns?",
+    todo: "Set up a returns process",
+    fix: "Decide who inspects returns, what can be resold, and how to raise claims for damaged or wrong items within each platform's time limit. Fashion and low-price categories usually see the highest return rates.",
+    w: { amazon: "R", blinkit: "H", zepto: "H", meesho: "R" } },
+
+  { id: "margin", group: "ops",
+    q: "Have you worked out your margin per product after commission, fees, shipping, GST and expected returns?",
+    todo: "Work out your real margin per product",
+    fix: "Calculate net margin per SKU after commission, fixed and closing fees, shipping, GST and expected returns. Products that only work at full price rarely survive marketplace discounts and ads.",
+    w: { amazon: "H", blinkit: "H", zepto: "H", meesho: "H" } }
+];
+
+const POINTS = { R: 3, H: 1, N: 0 };
+
+/* ============================================================
+   APP
+   ============================================================ */
+const $ = (id) => document.getElementById(id);
+const state = { category: null, answers: {} };
+
+function visibleQuestions() {
+  return QUESTIONS.filter(q => !q.only || (state.category && q.only.includes(state.category)));
+}
+
+function applyBranding() {
+  $("brandName").textContent = SETTINGS.agencyName;
+  $("footBrand").textContent = SETTINGS.agencyName;
+  $("brandTag").textContent = SETTINGS.tagline;
+  $("logo").textContent = SETTINGS.agencyInitials;
+  document.title = "Marketplace Readiness Check | " + SETTINGS.agencyName;
+}
+
+function optButtons(name, options, checked) {
+  return options.map(([value, label]) =>
+    `<label><input type="radio" name="${name}" value="${value}"${checked === value ? " checked" : ""}><span>${label}</span></label>`
+  ).join("");
+}
+
+function renderCategories() {
+  $("catOpts").innerHTML = optButtons("category", CATEGORIES.map(c => [c.id, c.label]), state.category);
+}
+
+function renderQuestions() {
+  const qs = visibleQuestions();
+  $("qCount").textContent = qs.length + 1; // + category
+  $("groups").innerHTML = GROUPS.map(g => {
+    const items = qs.filter(q => q.group === g.id);
+    if (!items.length) return "";
+    return `<h2>${g.title}</h2>` + items.map(q => `
+      <fieldset class="card${state.answers[q.id] ? " done" : ""}" data-q="${q.id}">
+        <legend>${q.q}</legend>
+        ${q.help ? `<p class="help">${q.help}</p>` : `<div style="height:8px"></div>`}
+        <div class="opts">${optButtons(q.id, [["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]], state.answers[q.id])}</div>
+      </fieldset>`).join("");
+  }).join("");
+  updateProgress();
+}
+
+function updateProgress() {
+  const qs = visibleQuestions();
+  const total = qs.length + 1; // + category
+  const done = qs.filter(q => state.answers[q.id]).length + (state.category ? 1 : 0);
+  $("progText").textContent = `${done} of ${total} answered`;
+  $("progFill").style.width = (done / total * 100) + "%";
+  $("seeBtn").disabled = done < total;
+}
+
+function score() {
+  const qs = visibleQuestions();
+  return PLATFORMS.map(p => {
+    let max = 0, got = 0, blockers = 0;
+    qs.forEach(q => {
+      const w = q.w[p.id];
+      const pts = POINTS[w] || 0;
+      max += pts;
+      if (state.answers[q.id] === "yes") got += pts;
+      else if (w === "R") blockers++;
+    });
+    const pct = max ? Math.round(got / max * 100) : 0;
+    let status;
+    if (blockers === 0 && pct >= 85) status = ["Ready to apply", "ok"];
+    else if (blockers <= 2 && pct >= 50) status = ["Almost there", "warn"];
+    else status = ["Not yet", "bad"];
+    return { ...p, pct, blockers, status };
+  });
+}
+
+function todoList() {
+  return visibleQuestions()
+    .filter(q => state.answers[q.id] !== "yes")
+    .map(q => ({
+      q,
+      blocks: PLATFORMS.filter(p => q.w[p.id] === "R").map(p => p.name),
+      unsure: state.answers[q.id] === "unsure"
+    }))
+    .sort((a, b) => b.blocks.length - a.blocks.length);
+}
+
+function renderResults() {
+  const s = score();
+  const todo = todoList();
+  const ready = s.filter(p => p.status[1] === "ok").map(p => p.name);
+  const cat = CATEGORIES.find(c => c.id === state.category);
+
+  $("resLead").textContent = ready.length
+    ? `Good news: you look ready to apply on ${listJoin(ready)}. ${todo.length ? "Clear the list below to open up the rest." : ""}`
+    : `Category: ${cat.label}. Here's where you stand on each platform. Work through the list below from the top; the first items unlock the most platforms.`;
+
+  $("scores").innerHTML = s.map(p => `
+    <div class="score">
+      <div class="name">${p.name}</div>
+      <div class="num">${p.pct}<small>/100</small></div>
+      <div class="track"><div class="fill ${p.status[1]}" style="width:${p.pct}%"></div></div>
+      <span class="pill ${p.status[1]}">${p.status[0]}</span>
+      <div class="sub">${p.blockers ? `${p.blockers} must-fix item${p.blockers > 1 ? "s" : ""}` : "No must-fix items"}</div>
+    </div>`).join("");
+
+  $("todoHead").hidden = false;
+  $("todo").innerHTML = todo.length ? todo.map(t => `
+    <li class="card">
+      <p class="title">${t.q.todo}</p>
+      <div class="tags">
+        ${t.blocks.length ? `<span class="pill bad">Must-fix for ${listJoin(t.blocks)}</span>` : `<span class="pill warn">Improves your score</span>`}
+        ${t.unsure ? `<span class="pill warn">You weren't sure: check this</span>` : ""}
+      </div>
+      <p class="fix">${t.q.fix}</p>
+    </li>`).join("")
+    : `<li class="card allgood" style="padding-left:18px">Nothing left on your list. You're ready to apply.</li>`;
+
+  const waMsg = [
+    `Hi ${SETTINGS.agencyName}, I just took the Marketplace Readiness Check.`,
+    `Category: ${cat.label}`,
+    `My scores: ${s.map(p => `${p.name} ${p.pct}/100`).join(", ")}`,
+    `Items on my to-do list: ${todo.length}`,
+    `Can you help me get ready?`
+  ].join("\n");
+  const wa = $("waBtn");
+  if (SETTINGS.whatsappNumber) {
+    wa.href = `https://wa.me/${SETTINGS.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(waMsg)}`;
+    wa.hidden = false;
+  }
+  $("ctaTitle").textContent = todo.length ? "Want help getting there faster?" : "Ready to launch?";
+  $("ctaText").textContent = todo.length
+    ? `${SETTINGS.agencyName} handles marketplace and quick-commerce onboarding end to end: documents, listings, images and launch.${SETTINGS.whatsappNumber ? " Send us your scores and we'll tell you the fastest route." : ""}`
+    : `${SETTINGS.agencyName} can run your onboarding, listings and launch so you start selling sooner.`;
+
+  $("quiz").hidden = true;
+  $("bar").hidden = true;
+  $("results").hidden = false;
+  window.scrollTo({ top: 0 });
+}
+
+function listJoin(arr) {
+  if (arr.length < 2) return arr.join("");
+  return arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
+}
+
+document.addEventListener("change", (e) => {
+  const el = e.target;
+  if (el.type !== "radio") return;
+  if (el.name === "category") {
+    state.category = el.value;
+    renderQuestions();
+    return;
+  }
+  state.answers[el.name] = el.value;
+  el.closest("fieldset").classList.add("done");
+  updateProgress();
+});
+
+$("seeBtn").addEventListener("click", renderResults);
+$("editBtn").addEventListener("click", () => {
+  $("results").hidden = true;
+  $("quiz").hidden = false;
+  $("bar").hidden = false;
+  window.scrollTo({ top: 0 });
+});
+$("printBtn").addEventListener("click", () => window.print());
+
+/* Demo / test mode: add #demo, #demo-yes or #demo-no to the URL to fill sample answers. */
+function demo(mode) {
+  state.category = "food";
+  const mixed = { gst: "yes", bank: "yes", brand: "unsure", barcode: "no", fssai: "yes", label: "yes",
+    shelf: "yes", images: "no", content: "yes", master: "no", packaging: "yes", dispatch: "yes",
+    qcsupply: "no", returns: "yes", margin: "unsure" };
+  visibleQuestions().forEach(q => {
+    state.answers[q.id] = mode === "yes" ? "yes" : mode === "no" ? "no" : (mixed[q.id] || "yes");
+  });
+  renderCategories();
+  renderQuestions();
+  renderResults();
+}
+
+applyBranding();
+renderCategories();
+renderQuestions();
+const m = location.hash.match(/^#demo(?:-(yes|no))?$/);
+if (m) demo(m[1] || "mixed");
+</script>
+</body>
+</html>
